@@ -1,5 +1,7 @@
-package utilities
+package utilities.funcions
+import java.nio.file.Path
 import java.util.Scanner
+import kotlin.io.path.appendText
 
 /**
  * Obre un objecte `Scanner` per llegir dades des de l'entrada estàndard.
@@ -57,6 +59,33 @@ fun readString(scan: Scanner, missatge: String): String {
 
     return linia  // Retorna la línia llegida
 }
+
+/**
+ * Funció que tanca escàner quan hem acabat
+ * de fer-lo servir
+ */
+fun tancarScanner() {
+    return Scanner(System.`in`).close()
+}
+
+
+/**
+ * Aquesta funció s'encarrega d'emplenar [ruta]
+ * amb el text que li proporcionem
+ * El programa finalitza quan entra una linia sense contingut
+ */
+fun llegirFrases(ruta : Path){
+    val scan = scan()
+    var linia = scan.nextLine()
+    while (linia.isNotEmpty()){
+        linia = scan.nextLine()
+        ruta.appendText(linia+"\n")
+    }
+    tancarScanner()
+}
+
+
+
 
 /**
  * Llegeix un nombre de tipus Double des de l'entrada estàndard.
