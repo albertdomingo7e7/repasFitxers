@@ -15,26 +15,21 @@ import kotlin.io.path.writeText
  * en cas que no existeixi, a part, ens permet esborrar el contingut
  * del mateix escribint per consola "@ESBORRA"
  */
-fun milloraExercici1(ruta : Path){
+fun milloraExercici1(ruta : Path) {
     if (!ruta.exists()) {
         ruta.createFile()
     }
     scan().use { scanner ->
-        while (scanner.hasNextLine()) {
-            val linia = scanner.nextLine()
-
-            if (linia == "@ESBORRA") {
-                ruta.writeText("")
-                return
-            } else if(linia.isEmpty()){
-                return
-            }
-
-            ruta.appendText("$linia\n")
+        var linia = scan().nextLine()
+        while (linia.isNotEmpty() && linia != "@ESBORRA") {
+            ruta.appendText(linia + "\n")
+            linia = scan().nextLine()
+        }
+        if(linia != "@ESBORRA"){
+            ruta.writeText("")
         }
     }
 }
-
 fun main(){
     val arxiu = Path("arxiu.txt")
     milloraExercici1(arxiu)

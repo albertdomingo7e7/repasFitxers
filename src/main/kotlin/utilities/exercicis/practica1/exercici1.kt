@@ -14,11 +14,11 @@ import kotlin.io.path.appendText
  * El programa finalitza quan entra una linia sense contingut
  */
 fun llegirFrases(ruta : Path){
-    val scan = scan()
-    var linia = scan.nextLine()
-    while (linia.isNotEmpty()){
-        linia = scan.nextLine()
-        ruta.appendText(linia+"\n")
+    scan().use { scanner ->
+        var linia = scan().nextLine()
+        while (linia.isNotEmpty()) {
+            ruta.appendText(linia + "\n")
+            linia = scan().nextLine()
+        }
     }
-    tancarScanner()
 }

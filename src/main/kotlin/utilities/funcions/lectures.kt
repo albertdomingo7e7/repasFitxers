@@ -1,8 +1,10 @@
 package utilities.funcions
 import java.nio.file.Path
 import java.util.Scanner
+import kotlin.io.path.Path
 import kotlin.io.path.appendText
 import kotlin.io.path.bufferedReader
+import kotlin.io.path.bufferedWriter
 
 /**
  * Obre un objecte `Scanner` per llegir dades des de l'entrada estàndard.

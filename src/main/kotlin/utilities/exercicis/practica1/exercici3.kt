@@ -7,6 +7,8 @@ import java.nio.file.Paths
 import kotlin.io.path.Path
 import kotlin.io.path.bufferedReader
 import kotlin.io.path.bufferedWriter
+import kotlin.io.path.deleteExisting
+import kotlin.io.path.deleteIfExists
 
 //Llegir i mostrar el document per pantalla
 
@@ -43,9 +45,15 @@ fun mostrarLinia(ruta : Path, nlinia : Int){
 //Inserir linia al principi del fitxer
 fun inserirLinia(ruta : Path){
     val temp = Path("temp.txt")
-    val copiaAtemp = temp.bufferedWriter()
-    copiaAtemp.use { copia ->
-        var liniaTemp = copia.
+    ruta.bufferedReader().use { reader ->
+        temp.bufferedWriter().use { writer ->
+            var linia = reader.readLine()
+            while (linia != null) {
+                writer.write(linia)
+                writer.newLine()
+                linia = reader.readLine()
+            }
+        }
     }
     scan().use { scanner ->
         val liniaAinserir = readString(scan(), "escriu la linia a inserir")
@@ -55,17 +63,20 @@ fun inserirLinia(ruta : Path){
             writer.newLine()
 
             //Copiem el document
-            val reader = ruta.bufferedReader()
-            reader.use{ reader ->
+            val copia = temp.bufferedReader()
+            copia.use{ reader ->
                 var linia = reader.readLine()
                 while (linia != null) {
-                    writer.write(linia+"\n")
+                    writer.write(linia)
+                    writer.newLine()
                     linia = reader.readLine()
                 }
             }
         }
     }
+    temp.deleteIfExists()
 }
+
 
 fun main(){
     val ruta = Path("textos.txt")
