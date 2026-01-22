@@ -10,32 +10,29 @@ import kotlin.io.path.createFile
 import kotlin.io.path.exists
 import kotlin.io.path.writeText
 
-// Crea un programa que llegeixi frases per teclat i les vagi
-// guardant en un fitxer de nom “textos.txt”.
-// El programa finalitzarà quan s’entri una cadena buida.
 /**
- * Aquesta funció s'encarrega d'emplenar [ruta]
- * amb el text que li proporcionem
- * El programa finalitza quan entra una linia sense contingut
+ * Millora de la funció anterior, aquesta permet crear [ruta]
+ * en cas que no existeixi, a part, ens permet esborrar el contingut
+ * del mateix escribint per consola "@ESBORRA"
  */
 fun milloraExercici1(ruta : Path){
-    val scan = scan()
-    if(!ruta.exists()) {
+    if (!ruta.exists()) {
         ruta.createFile()
-    } else {
-        var linia = scan.nextLine()
-        if(linia == "@ESBORRA"){
-            ruta.writeText("")
-        }
-        while(linia.isNotEmpty()){
-            linia = scan.nextLine()
-            ruta.appendText(linia+"\n")
-            if(linia == "@ESBORRA"){
+    }
+    scan().use { scanner ->
+        while (scanner.hasNextLine()) {
+            val linia = scanner.nextLine()
+
+            if (linia == "@ESBORRA") {
                 ruta.writeText("")
+                return
+            } else if(linia.isEmpty()){
+                return
             }
+
+            ruta.appendText("$linia\n")
         }
     }
-    tancarScanner()
 }
 
 fun main(){

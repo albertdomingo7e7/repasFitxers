@@ -2,6 +2,7 @@ package utilities.funcions
 import java.nio.file.Path
 import java.util.Scanner
 import kotlin.io.path.appendText
+import kotlin.io.path.bufferedReader
 
 /**
  * Obre un objecte `Scanner` per llegir dades des de l'entrada estàndard.
@@ -12,6 +13,41 @@ import kotlin.io.path.appendText
 fun scan(): Scanner {
     return Scanner(System.`in`)
 }
+
+/**
+ * Funció que ens permet llegir un document de text
+ * linia per linia sense carregar-lo completament en memòria
+ */
+fun mostrarFitxer(ruta : Path){
+    ruta.bufferedReader().use { reader ->
+        var linia = reader.readLine()
+        while (linia != null) {
+            println(linia)
+            linia = reader.readLine()
+        }
+    }
+}
+
+/**
+ * Funcio que ens permet consultar una linia en
+ * concret del fitxer accedint amb un [Int]
+ */
+fun mostrarLinia(ruta : Path, nlinia : Int){
+    var index = 1
+    ruta.bufferedReader().use {
+        var linia = it.readLine()
+        while (linia != null) {
+            if(index == nlinia){
+                println(linia)
+                return
+            }
+            index++
+            linia = it.readLine()
+
+        }
+    }
+}
+
 
 
 
